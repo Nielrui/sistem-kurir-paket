@@ -18,25 +18,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = trim($_POST['password'] ?? '');
 
     $stmt = $pdo->prepare("
-        SELECT *
-        FROM users
-        WHERE kode_user = :identifier
-           OR email = :identifier
-           OR no_hp = :identifier
-        LIMIT 1
-    ");
+    SELECT *
+    FROM users
+    WHERE kode_user = ?
+       OR email = ?
+       OR no_hp = ?
+    LIMIT 1
+");
 
     $stmt->execute([
-        'identifier' => $identifier
+        $identifier,
+        $identifier,
+        $identifier
     ]);
 
     $user = $stmt->fetch();
 
     if ($user && password_verify($password, $user['password'])) {
 
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['nama'] = $user['nama'];
-        $_SESSION['role'] = $user['role'];
+        $_SESSION['user_id']   = $user['id'];
+        $_SESSION['kode_user'] = $user['kode_user'];
+        $_SESSION['nama']      = $user['nama'];
+        $_SESSION['email']     = $user['email'];
+        $_SESSION['no_hp']     = $user['no_hp'];
+        $_SESSION['role']      = $user['role'];
 
         if ($user['role'] === 'admin') {
             header('Location: ../dashboard/admin.php');
