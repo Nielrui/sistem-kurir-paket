@@ -1,0 +1,14 @@
+# Environment & secrets
+.env
+*.env
+
+# Docker volumes
+mysql_data/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
