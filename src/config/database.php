@@ -1,0 +1,19 @@
+<?php
+
+$host = 'db';
+$dbname = 'kurir_db';
+$username = 'kurir_user';
+$password = 'kurir_pass123';
+
+try {
+    $pdo = new PDO(
+        "mysql:host=$host;dbname=$dbname;charset=utf8",
+        $username,
+        $password
+    );
+
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+} catch (PDOException $e) {
+    die("Database Error: " . $e->getMessage());
+}
